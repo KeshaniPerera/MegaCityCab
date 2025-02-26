@@ -1,0 +1,355 @@
+@charset "UTF-8";
+@charset "UTF-8";
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #f4f4f4;
+}
+
+/* Hero Image with Background */
+.hero {
+    width: 100%;
+    height: 100vh;
+    background: url('images/main.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Book A Cab Button */
+.book-btn {
+    padding: 15px 30px;
+    font-size: 20px;
+    background: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.book-btn:hover {
+    background: #e65c00;
+}
+
+/* Booking Form */
+.booking-container {
+    display: none; /* Hidden initially */
+    background: white;
+    padding: 20px;
+    max-width: 400px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h2 {
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+select, input {
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 18px;
+    background: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e65c00;
+}
+/* Login Container */
+.login-container {
+    background: white;
+    padding: 20px;
+    max-width: 350px;
+    margin: 100px auto;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.login-container h2 {
+    color: #333;
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container label {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.login-container input {
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-container button {
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 18px;
+    background: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-container button:hover {
+    background: #e65c00;
+}
+
+/* Sign Up Text */
+.signup-text {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.signup-text a {
+    color: #ff6600;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-text a:hover {
+    text-decoration: underline;
+}
+
+/* FAQ Section */
+.faq-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: left;
+}
+
+.faq-container h2 {
+    text-align: center;
+    color: #333;
+}
+
+.faq-item {
+    margin-bottom: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.faq-item h3 {
+    color: #ff6600;
+    font-size: 18px;
+}
+
+.faq-item p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Login & Signup Container */
+.login-container, .signup-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: left;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Name Group: First Name & Last Name Side by Side */
+.name-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-group {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+input {
+    margin-top: 5px;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 18px;
+    background: #ff6600;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e65c00;
+}
+
+/* Sign-in / Sign-up Link */
+.signup-text, .signin-text {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.signup-text a, .signin-text a {
+    color: #ff6600;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-text a:hover, .signin-text a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* MyBookings Styles */
+
+/* My Bookings Page */
+.bookings-container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background: white;
+    text-align: center;
+}
+
+/* Booking Cards */
+.booking-card {
+    background: #fff;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #ff6600;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Section */
+.booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+h3 {
+    margin: 0;
+    color: #333;
+}
+
+/* Status Buttons */
+.status-btn {
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.confirmed {
+    background: #4CAF50;
+}
+
+.pending {
+    background: #FFA500;
+}
+
+.canceled {
+    background: #FF0000;
+}
+
+/* Booking Details */
+.booking-details {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    text-align: left;
+}
+
+.booking-details p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+/* Payment Status */
+.payment-status {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.paid {
+    background: #4CAF50;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.not-paid {
+    background: #FF0000;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
