@@ -4,9 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class databaseConnection {
+public class DatabaseConnection {
     // Singleton instance
-    private static volatile databaseConnection instance;
+    private static volatile DatabaseConnection instance;
 
     // Database connection details
     private final String jdbcURL = "jdbc:mysql://localhost:3307/megacitycab";
@@ -17,7 +17,7 @@ public class databaseConnection {
     private Connection connection;
 
     // Private constructor to prevent external instantiation
-    private databaseConnection() {
+    private DatabaseConnection() {
         try {
             // Load the MySQL JDBC driver
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -31,11 +31,11 @@ public class databaseConnection {
     }
 
     // Thread-safe Singleton getInstance() method
-    public static databaseConnection getInstance() {
+    public static DatabaseConnection getInstance() {
         if (instance == null) {
-            synchronized (databaseConnection.class) {
+            synchronized (DatabaseConnection.class) {
                 if (instance == null) {
-                    instance = new databaseConnection();
+                    instance = new DatabaseConnection();
                 }
             }
         }
