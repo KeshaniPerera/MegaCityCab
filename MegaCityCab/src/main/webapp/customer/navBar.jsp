@@ -73,7 +73,7 @@
                 } else {
                     // User is not logged in, display Login link
             %>
-                    <a href="login.jsp">Login</a>
+                    <a href="../authentication/signIn.jsp">Login</a>
             <%
                 }
             %>
