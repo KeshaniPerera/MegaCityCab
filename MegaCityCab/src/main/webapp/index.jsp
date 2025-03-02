@@ -1,3 +1,3 @@
 <script type="text/javascript">
-    window.location.href = "authentication/signIn.jsp";
+    window.location.href = "customer/home.jsp";
 </script>
