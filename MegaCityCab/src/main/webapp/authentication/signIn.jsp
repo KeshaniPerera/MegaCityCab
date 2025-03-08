@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,8 +105,8 @@
         }
     </style>
 </head>
+</head>
 <body>
-
     <!-- Logo -->
     <div class="logo">
         <img src="${pageContext.request.contextPath}/images/logo.png" alt="Mega City Cab Logo">
@@ -116,7 +115,7 @@
     <!-- Login Container -->
     <div class="login-container">
         <h2>Login</h2>
-        <form id="loginForm">
+        <form id="loginForm" action="${pageContext.request.contextPath}/signIn" method="post">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
             
@@ -128,5 +127,35 @@
         <p class="signup-text">New Here? <a href="signUp.jsp">Sign Up</a></p>
     </div>
 
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: "POST",
+                body: new URLSearchParams(formData), // Convert FormData to URL-encoded format
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded" // Set the correct Content-Type
+                }
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log("Response from server:", data); // Debug log
+                if (data === "admin") {
+                    window.location.href = "${pageContext.request.contextPath}/admin/dashboard.jsp"; // Redirect to admin dashboard
+                } else if (data === "customer") {
+                    window.location.href = "${pageContext.request.contextPath}/customer/dashboard.jsp"; // Redirect to customer dashboard
+                } else if (data === "failure") {
+                    alert("Login failed. Please check your email and password.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again.");
+            });
+        });
+    </script>
 </body>
 </html>
