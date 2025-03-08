@@ -146,7 +146,7 @@
                 if (data === "admin") {
                     window.location.href = "${pageContext.request.contextPath}/admin/dashboard.jsp"; // Redirect to admin dashboard
                 } else if (data === "customer") {
-                    window.location.href = "${pageContext.request.contextPath}/customer/dashboard.jsp"; // Redirect to customer dashboard
+                    window.location.href = "${pageContext.request.contextPath}/customer/home.jsp"; // Redirect to customer dashboard
                 } else if (data === "failure") {
                     alert("Login failed. Please check your email and password.");
                 }
