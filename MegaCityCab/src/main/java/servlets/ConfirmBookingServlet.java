@@ -53,8 +53,8 @@ public class ConfirmBookingServlet extends HttpServlet {
         String pickupLocation = request.getParameter("pickup");
         String returnLocation = request.getParameter("drop");
         String bill = request.getParameter("bill");
-        String bookingStatus = "Confirmed"; // Default status when booking is confirmed
-        String paymentStatus = "Pending"; // Default payment status
+        String bookingStatus = "Pending";
+        String paymentStatus = "Not Paid"; 
 
         // Debugging: Print all form data
         System.out.println("Form Data Received:");
@@ -78,13 +78,13 @@ public class ConfirmBookingServlet extends HttpServlet {
         }
 
         try {
-            // Validate numeric fields before parsing
-            if (!isNumeric(vehicleID) || !isNumeric(driverID) || !isNumeric(bill)) {
-                System.out.println("ERROR: One or more numeric fields are invalid.");
-                request.setAttribute("message", "Booking failed due to invalid number format. Please check the entered values.");
-                request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
-                return;
-            }
+//             Validate numeric fields before parsing
+//            if (!isNumeric(vehicleID) || !isNumeric(driverID) || !isNumeric(bill)) {
+//                System.out.println("ERROR: One or more numeric fields are invalid.");
+//                request.setAttribute("message", "Booking failed due to invalid number format. Please check the entered values.");
+//                request.getRequestDispatcher("/confirmation.jsp").forward(request, response);
+//                return;
+//            }
 
             // Create booking object
             Booking booking = new Booking();

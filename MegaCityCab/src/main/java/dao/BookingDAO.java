@@ -146,6 +146,96 @@ public class BookingDAO {
         
         return bookings;
     }
+    private List<Booking> getBookingsByStatus(String status) {
+        List<Booking> bookings = new ArrayList<>();
+        String query = "SELECT * FROM bookings WHERE bookingStatus = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, status);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                Booking booking = new Booking();
+                booking.setBookingID(rs.getInt("bookingID"));
+                booking.setCustomerID(rs.getInt("customerID"));
+                booking.setVehicleType(rs.getString("vehicleType"));
+                booking.setVehicleID(rs.getInt("vehicleID"));
+                booking.setDriverID(rs.getInt("driverID"));
+                booking.setRentalDate(rs.getString("rentalDate"));
+                booking.setRentalTime(rs.getString("rentalTime"));
+                booking.setPickupLocation(rs.getString("pickupLocation"));
+                booking.setReturnLocation(rs.getString("dropLocation"));
+                booking.setBill(rs.getDouble("bill"));
+                booking.setBookingStatus(rs.getString("bookingStatus"));
+                booking.setPaymentStatus(rs.getString("paymentStatus"));
+                bookings.add(booking);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error retrieving bookings with status: " + status, e);
+        }
+
+        return bookings;
+    }
+
+    // Methods for specific statuses
+    public List<Booking> getPendingBookings() {
+        return getBookingsByStatus("Pending");
+    }
+
+    public List<Booking> getBookedBookings() {
+        return getBookingsByStatus("Booked");
+    }
+
+    public List<Booking> getCompletedBookings() {
+        return getBookingsByStatus("Completed");
+    }
+
+    public List<Booking> getCancelledBookings() {
+        return getBookingsByStatus("Cancelled");
+    }
+    
+    public boolean updateBookingStatus(int bookingID, String newStatus) {
+        String query = "UPDATE bookings SET bookingStatus = ? WHERE bookingID = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, newStatus);
+            stmt.setInt(2, bookingID);
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Booking status updated successfully! Booking ID: " + bookingID);
+                return true;
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error updating booking status for bookingID: " + bookingID, e);
+        }
+
+        return false;
+    }
+    
+    public boolean updateBookingWithVehicleAndDriver(int bookingID, String newStatus, int vehicleID, int driverID) {
+        String query = "UPDATE bookings SET bookingStatus = ?, vehicleID = ?, driverID = ? WHERE bookingID = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, newStatus);
+            stmt.setInt(2, vehicleID);
+            stmt.setInt(3, driverID);
+            stmt.setInt(4, bookingID);
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Booking updated successfully with vehicle and driver. Booking ID: " + bookingID);
+                return true;
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error updating booking with vehicle and driver for bookingID: " + bookingID, e);
+        }
+
+        return false;
+    }
 
 
 }
+
+
+

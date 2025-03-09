@@ -27,8 +27,8 @@
         <input type="hidden" name="bill" value="${bill}" />
 
         <!-- Dummy data for other fields -->
-        <input type="hidden" name="vehicleID" value="" />
-        <input type="hidden" name="driverID" value="" />
+        <input type="hidden" name="vehicleID" value="0" />
+        <input type="hidden" name="driverID" value="0" />
         <input type="hidden" name="bookingStatus" value="Pending" />
         <input type="hidden" name="paymentStatus" value="Not Paid" />
 
