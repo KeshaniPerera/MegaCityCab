@@ -3,12 +3,11 @@ package model;
 public class Booking {
     private int bookingID;
     private int customerID;
-    private String vehiceType;
+    private String vehicleType;
     private int vehicleID;
     private int driverID;
     private String rentalDate;
     private String rentalTime;
-    private String returnDate;
     private String pickupLocation;
     private String returnLocation;
     private double bill;
@@ -34,11 +33,13 @@ public class Booking {
     }
     
     public String getVehicleType() {
-        return vehiceType;
+        return vehicleType;
     }
-    public void setVehicleType(String VehicleType) {
-    	this.vehiceType = vehiceType;
+    public void setVehicleType(String vehicleType) {
+    	this.vehicleType = vehicleType;
     }
+    
+   
 
     public int getVehicleID() {
         return vehicleID;
@@ -72,13 +73,7 @@ public class Booking {
         this.rentalTime = rentalTime;
     }
 
-    public String getReturnDate() {
-        return returnDate;
-    }
-
-    public void setReturnDate(String returnDate) {
-        this.returnDate = returnDate;
-    }
+    
 
     public String getPickupLocation() {
         return pickupLocation;

@@ -1,4 +1,5 @@
 package dao;
+
 import model.Booking;
 import java.sql.*;
 import java.util.ArrayList;
@@ -27,39 +28,53 @@ public class BookingDAO {
         return instance;
     }
 
-    // Insert New Booking
     public boolean addBooking(Booking booking) {
-        String query = "INSERT INTO bookings (bookingID, customerID, vehicleType, vehicleID, driverID, rentalDate, rentalTime, " +
-                "returnDate, pickupLocation, returnLocation, bill, bookingStatus, paymentStatus) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; // 13 Placeholders
+        String query = "INSERT INTO bookings (customerID, vehicleType, vehicleID, driverID, rentalDate, rentalTime, " +
+                       "pickupLocation, dropLocation, bill, bookingStatus, paymentStatus) " +
+                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setInt(1, booking.getBookingID());
-            stmt.setInt(2, booking.getCustomerID());
-            stmt.setString(3, booking.getVehicleType()); // Added vehicleType
-            stmt.setInt(4, booking.getVehicleID());
-            stmt.setInt(5, booking.getDriverID());
-            stmt.setString(6, booking.getRentalDate());
-            stmt.setString(7, booking.getRentalTime());
-            stmt.setString(8, booking.getReturnDate());
-            stmt.setString(9, booking.getPickupLocation());
-            stmt.setString(10, booking.getReturnLocation());
-            stmt.setDouble(11, booking.getBill());
-            stmt.setString(12, booking.getBookingStatus());
-            stmt.setString(13, booking.getPaymentStatus());
+            stmt.setInt(1, booking.getCustomerID());
+            stmt.setString(2, booking.getVehicleType());
+            stmt.setInt(3, booking.getVehicleID());
+            stmt.setInt(4, booking.getDriverID());
+            stmt.setString(5, booking.getRentalDate());
+            stmt.setString(6, booking.getRentalTime());
+            stmt.setString(7, booking.getPickupLocation());
+            stmt.setString(8, booking.getReturnLocation());
+            stmt.setDouble(9, booking.getBill());
+            stmt.setString(10, booking.getBookingStatus());
+            stmt.setString(11, booking.getPaymentStatus());
+
+            // Debugging: Print all values being inserted
+            System.out.println("Inserting Booking:");
+            System.out.println("Customer ID: " + booking.getCustomerID());
+            System.out.println("Vehicle Type: " + booking.getVehicleType());
+            System.out.println("Vehicle ID: " + booking.getVehicleID());
+            System.out.println("Driver ID: " + booking.getDriverID());
+            System.out.println("Rental Date: " + booking.getRentalDate());
+            System.out.println("Rental Time: " + booking.getRentalTime());
+            System.out.println("Pickup Location: " + booking.getPickupLocation());
+            System.out.println("Return Location: " + booking.getReturnLocation());
+            System.out.println("Bill: " + booking.getBill());
+            System.out.println("Booking Status: " + booking.getBookingStatus());
+            System.out.println("Payment Status: " + booking.getPaymentStatus());
 
             int affectedRows = stmt.executeUpdate();
             if (affectedRows > 0) {
-                System.out.println("Booking added successfully! Booking ID: " + booking.getBookingID());
+                ResultSet generatedKeys = stmt.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    int generatedId = generatedKeys.getInt(1);
+                    System.out.println("Booking added successfully! Generated Booking ID: " + generatedId);
+                }
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error adding booking to the database", e);
         }
         return false;
     }
 
-    // Retrieve All Bookings
     public List<Booking> getAllBookings() {
         List<Booking> bookings = new ArrayList<>();
         String query = "SELECT * FROM bookings";
@@ -71,14 +86,13 @@ public class BookingDAO {
                 Booking booking = new Booking();
                 booking.setBookingID(rs.getInt("bookingID"));
                 booking.setCustomerID(rs.getInt("customerID"));
-                booking.setVehicleType(rs.getString("vehicleType")); // Added vehicleType
+                booking.setVehicleType(rs.getString("vehicleType"));
                 booking.setVehicleID(rs.getInt("vehicleID"));
                 booking.setDriverID(rs.getInt("driverID"));
                 booking.setRentalDate(rs.getString("rentalDate"));
                 booking.setRentalTime(rs.getString("rentalTime"));
-                booking.setReturnDate(rs.getString("returnDate"));
                 booking.setPickupLocation(rs.getString("pickupLocation"));
-                booking.setReturnLocation(rs.getString("returnLocation"));
+                booking.setReturnLocation(rs.getString("dropLocation"));
                 booking.setBill(rs.getDouble("bill"));
                 booking.setBookingStatus(rs.getString("bookingStatus"));
                 booking.setPaymentStatus(rs.getString("paymentStatus"));
@@ -86,89 +100,52 @@ public class BookingDAO {
                 bookings.add(booking);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error retrieving bookings from the database", e);
         }
+
         return bookings;
     }
 
-    // Retrieve Booking by ID
-    public Booking getBookingById(int bookingID) {
-        String query = "SELECT * FROM bookings WHERE bookingID = ?";
-        Booking booking = null;
-
+    // Method to get bookings by customerID
+    public List<Booking> getBookingsByCustomerID(int customerID) {
+        List<Booking> bookings = new ArrayList<>();
+        String query = "SELECT * FROM bookings WHERE customerID = ?";
+        
+        System.out.println("SQL Query: " + query + " for customerID: " + customerID); // Debugging line
+        
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, bookingID);
+            stmt.setInt(1, customerID);
             ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                booking = new Booking();
+            
+            while (rs.next()) {
+                Booking booking = new Booking();
                 booking.setBookingID(rs.getInt("bookingID"));
                 booking.setCustomerID(rs.getInt("customerID"));
-                booking.setVehicleType(rs.getString("vehicleType")); // Added vehicleType
+                booking.setVehicleType(rs.getString("vehicleType"));
                 booking.setVehicleID(rs.getInt("vehicleID"));
                 booking.setDriverID(rs.getInt("driverID"));
                 booking.setRentalDate(rs.getString("rentalDate"));
                 booking.setRentalTime(rs.getString("rentalTime"));
-                booking.setReturnDate(rs.getString("returnDate"));
                 booking.setPickupLocation(rs.getString("pickupLocation"));
-                booking.setReturnLocation(rs.getString("returnLocation"));
+                booking.setReturnLocation(rs.getString("dropLocation"));
+                
+                // Make sure to remove or modify the reference to 'returnLocation' if it's not in the table
+               
+                
                 booking.setBill(rs.getDouble("bill"));
                 booking.setBookingStatus(rs.getString("bookingStatus"));
                 booking.setPaymentStatus(rs.getString("paymentStatus"));
+                
+                bookings.add(booking);
             }
+            
+            System.out.println("Bookings retrieved: " + bookings.size());  // Debugging line
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace();  // Debugging line
         }
-        return booking;
+        
+        return bookings;
     }
 
-    // Update Booking
-    public boolean updateBooking(Booking booking) {
-        String query = "UPDATE bookings SET customerID = ?, vehicleType = ?, vehicleID = ?, driverID = ?, rentalDate = ?, rentalTime = ?, " +
-                "returnDate = ?, pickupLocation = ?, returnLocation = ?, bill = ?, bookingStatus = ?, paymentStatus = ? " +
-                "WHERE bookingID = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, booking.getCustomerID());
-            stmt.setString(2, booking.getVehicleType()); // Added vehicleType
-            stmt.setInt(3, booking.getVehicleID());
-            stmt.setInt(4, booking.getDriverID());
-            stmt.setString(5, booking.getRentalDate());
-            stmt.setString(6, booking.getRentalTime());
-            stmt.setString(7, booking.getReturnDate());
-            stmt.setString(8, booking.getPickupLocation());
-            stmt.setString(9, booking.getReturnLocation());
-            stmt.setDouble(10, booking.getBill());
-            stmt.setString(11, booking.getBookingStatus());
-            stmt.setString(12, booking.getPaymentStatus());
-            stmt.setInt(13, booking.getBookingID());
-
-            int affectedRows = stmt.executeUpdate();
-            if (affectedRows > 0) {
-                System.out.println("Booking updated successfully! Booking ID: " + booking.getBookingID());
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    // Delete Booking
-    public boolean deleteBooking(int bookingID) {
-        String query = "DELETE FROM bookings WHERE bookingID = ?";
-
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, bookingID);
-
-            int affectedRows = stmt.executeUpdate();
-            if (affectedRows > 0) {
-                System.out.println("Booking deleted successfully! Booking ID: " + bookingID);
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 }

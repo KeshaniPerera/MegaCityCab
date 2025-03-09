@@ -110,10 +110,10 @@
     <div class="container">
         <h1>Booking Page</h1>
 
-        <form action="booking" method="post">
+        <form action="${pageContext.request.contextPath}/booking" method="post">
             <div class="form-group">
                 <label for="vehicle">Select Vehicle:</label>
-                <select id="vehicle" name="vehicle">
+                <select id="vehicleType" name="vehicleType">
                     <option value="car">Car</option>
                     <option value="van">Van</option>
                     <option value="bike">Bike</option>

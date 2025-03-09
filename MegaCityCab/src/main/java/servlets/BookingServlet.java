@@ -10,6 +10,7 @@ import java.util.Map;
 
 @WebServlet("/booking")
 public class BookingServlet extends HttpServlet {
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get the location distances (no change needed here)
         Map<String, Map<String, Double>> distances = Locations.getLocationDistances();
@@ -26,9 +27,9 @@ public class BookingServlet extends HttpServlet {
         // Get the pickup, drop locations, vehicle, date, and time from the form submission
         String pickup = request.getParameter("pickup");
         String drop = request.getParameter("drop");
-        String vehicle = request.getParameter("vehicle");  // New vehicle parameter
-        String date = request.getParameter("date");        // New date parameter
-        String time = request.getParameter("time");        // New time parameter
+        String vehicleType = request.getParameter("vehicleType");  // Corrected vehicle parameter
+        String date = request.getParameter("date");        // Corrected date parameter
+        String time = request.getParameter("time"); 
 
         // Calculate the bill using the utility class
         double bill = CalculateBillUtil.calculateBill(pickup, drop);
@@ -36,13 +37,14 @@ public class BookingServlet extends HttpServlet {
         // Set the data as attributes to display them on the confirmation page
         request.setAttribute("pickup", pickup);
         request.setAttribute("drop", drop);
-        request.setAttribute("vehicle", vehicle);
+        request.setAttribute("vehicleType", vehicleType);
         request.setAttribute("date", date);
         request.setAttribute("time", time);
         request.setAttribute("bill", bill);
 
         // Forward the request to the confirmation page (confirmBooking.jsp)
         RequestDispatcher dispatcher = request.getRequestDispatcher("/customer/confirmBooking.jsp");
+
         dispatcher.forward(request, response);
     }
 }

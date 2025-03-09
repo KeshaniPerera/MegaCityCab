@@ -64,11 +64,12 @@
             <!-- Check if user is logged in -->
             <% 
                 // Check if the user is logged in (e.g., by checking a session attribute)
-                String loggedInUser = (String) session.getAttribute("username");
+                String loggedInUser = (String) session.getAttribute("user_email");
                 if (loggedInUser != null) {
                     // User is logged in, display Logout link
             %>
-                    <a href="logout.jsp">Logout</a>
+                    <a href="${pageContext.request.contextPath}/SignOut">Logout</a>
+                   
             <%
                 } else {
                     // User is not logged in, display Login link
