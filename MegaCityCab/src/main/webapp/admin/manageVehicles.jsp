@@ -19,7 +19,6 @@
 
         <!-- Actions Table -->
         <table class="table table-bordered">
-            
             <tbody>
                 <tr>
                     <td class="text-center">
@@ -45,6 +44,7 @@
                     <th>Seating Capacity</th>
                     <th>Fuel Type</th>
                     <th>Rate Per Day</th>
+                    <th>Actions</th> <!-- New Action Column -->
                 </tr>
             </thead>
             <tbody>
@@ -62,6 +62,13 @@
                     <td><%= vehicle.getSeatingCapacity() %></td>
                     <td><%= vehicle.getFuelType() %></td>
                     <td><%= vehicle.getRatePerDay() %></td>
+                    <td>
+                        <!-- Action to delete the vehicle -->
+                        <form action="${pageContext.request.contextPath}/ManageVehicles" method="post" style="display:inline;">
+                            <input type="hidden" name="vehicleID" value="<%= vehicle.getVehicleID() %>">
+                            <button type="submit" class="">❌</button>
+                        </form>
+                    </td>
                 </tr>
                 <% } %>
             </tbody>
@@ -79,16 +86,16 @@
                 <div class="modal-body">
                     <form action="${pageContext.request.contextPath}/ManageVehicles" method="post">
                     
-						                       <div class="mb-3">
-						    <label class="form-label fw-bold">Vehicle Name</label>
-						    <select name="vehicleName" class="form-control" required>
-						        <option value="" disabled selected>Select a vehicle</option>
-						        <option value="Alto">Alto</option>
-						        <option value="WagonR">WagonR</option>
-						        <option value="KDH">KDH</option>
-						        <option value="Prius">Prius</option>
-						    </select>
-						</div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Vehicle Name</label>
+                            <select name="vehicleName" class="form-control" required>
+                                <option value="" disabled selected>Select a vehicle</option>
+                                <option value="Alto">Alto</option>
+                                <option value="WagonR">WagonR</option>
+                                <option value="KDH">KDH</option>
+                                <option value="Prius">Prius</option>
+                            </select>
+                        </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Model</label>
@@ -116,7 +123,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Rate Per Day</label>
-                            <input type="number"  name="ratePerDay" class="form-control" placeholder="Enter rate per day" required>
+                            <input type="number" name="ratePerDay" class="form-control" placeholder="Enter rate per day" required>
                         </div>
                         <div class="d-flex justify-content-end gap-2">
                             <button type="submit" class="btn btn-success">Add</button>

@@ -86,4 +86,24 @@ public class VehicleDAO {
         }
         return vehicles;
     }
+    
+    public boolean deleteVehicle(int vehicleID) {
+        String query = "DELETE FROM vehicles WHERE vehicleID = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, vehicleID);
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Vehicle deleted successfully! Vehicle ID: " + vehicleID);
+                return true;
+            } else {
+                System.out.println("No vehicle found with ID: " + vehicleID);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error deleting vehicle from the database", e);
+        }
+        return false;
+    }
+
 }
