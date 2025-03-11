@@ -63,12 +63,12 @@ public class MyBookingsServlet extends HttpServlet {
             } else {
                 // Redirect to login page if no email is found in session
                 System.out.println("No email found in session. Redirecting to login page.");
-                response.sendRedirect("login.jsp");
+                response.sendRedirect("authentication/signIn.jsp");
             }
         } else {
             // If no session, redirect to login page
             System.out.println("No session found. Redirecting to login page.");
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("authentication/signIn.jsp");
         }
     }
 

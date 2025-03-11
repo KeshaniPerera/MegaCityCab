@@ -52,14 +52,15 @@
     <div class="navbar">
         <!-- Logo linking to home.jsp -->
         <a href="home.jsp" class="logo">
-            <img src="../images/logo.png" alt="Logo">
+<img src="${pageContext.request.contextPath}/images/logo.png" alt="Logo">
+            
         </a>
 
         <!-- Navbar links aligned to the right -->
         <div class="nav-links">
-            <a href="home.jsp">Home</a>
-            <a href="booking.jsp">Booking</a>
-            <a href="help.jsp">Help</a>
+            <a href="${pageContext.request.contextPath}/customer/home.jsp">Home</a>
+            <a href="${pageContext.request.contextPath}/booking">Booking</a>
+			<a href="${pageContext.request.contextPath}/customer/help.jsp">Help</a>
             <a href="${pageContext.request.contextPath}/MyBookings">My Bookings</a>
 
             <!-- Check if user is logged in -->

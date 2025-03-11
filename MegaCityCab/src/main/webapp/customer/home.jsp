@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +38,7 @@
         left: 30%; /* Adjusted to move text to the left */
         transform: translate(-50%, -50%);
         background-color: rgba(0, 0, 0, 0.7); /* Black rectangle with some transparency */
-        padding: 20px;
+       20px;
         border-radius: 10px;
         text-align: center;
     }
@@ -76,7 +77,7 @@
         <!-- Overlay with text and link -->
         <div class="overlay">
             <h1>Enjoy a reliable journey with Mega City Cabs</h1>
-            <a href="booking.jsp">BOOK NOW</a>
+            <a href="${sessionScope.user_email != null ?  "../booking" : '../authentication/signIn.jsp'}">BOOK NOW</a>
         </div>
     </div>
 

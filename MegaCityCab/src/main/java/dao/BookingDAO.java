@@ -31,7 +31,7 @@ public class BookingDAO {
     public boolean addBooking(Booking booking) {
         String query = "INSERT INTO bookings (customerID, vehicleType, vehicleID, driverID, rentalDate, rentalTime, " +
                        "pickupLocation, dropLocation, bill, bookingStatus, paymentStatus) " +
-                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                       "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, booking.getCustomerID());
@@ -44,7 +44,6 @@ public class BookingDAO {
             stmt.setString(8, booking.getReturnLocation());
             stmt.setDouble(9, booking.getBill());
             stmt.setString(10, booking.getBookingStatus());
-            stmt.setString(11, booking.getPaymentStatus());
 
             // Debugging: Print all values being inserted
             System.out.println("Inserting Booking:");
@@ -58,7 +57,6 @@ public class BookingDAO {
             System.out.println("Return Location: " + booking.getReturnLocation());
             System.out.println("Bill: " + booking.getBill());
             System.out.println("Booking Status: " + booking.getBookingStatus());
-            System.out.println("Payment Status: " + booking.getPaymentStatus());
 
             int affectedRows = stmt.executeUpdate();
             if (affectedRows > 0) {
@@ -95,7 +93,6 @@ public class BookingDAO {
                 booking.setReturnLocation(rs.getString("dropLocation"));
                 booking.setBill(rs.getDouble("bill"));
                 booking.setBookingStatus(rs.getString("bookingStatus"));
-                booking.setPaymentStatus(rs.getString("paymentStatus"));
 
                 bookings.add(booking);
             }
@@ -134,7 +131,6 @@ public class BookingDAO {
                 
                 booking.setBill(rs.getDouble("bill"));
                 booking.setBookingStatus(rs.getString("bookingStatus"));
-                booking.setPaymentStatus(rs.getString("paymentStatus"));
                 
                 bookings.add(booking);
             }
@@ -167,7 +163,6 @@ public class BookingDAO {
                 booking.setReturnLocation(rs.getString("dropLocation"));
                 booking.setBill(rs.getDouble("bill"));
                 booking.setBookingStatus(rs.getString("bookingStatus"));
-                booking.setPaymentStatus(rs.getString("paymentStatus"));
                 bookings.add(booking);
             }
         } catch (SQLException e) {

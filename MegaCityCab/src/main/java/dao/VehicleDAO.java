@@ -86,7 +86,7 @@ public class VehicleDAO {
         }
         return vehicles;
     }
-    
+
     public boolean deleteVehicle(int vehicleID) {
         String query = "DELETE FROM vehicles WHERE vehicleID = ?";
 
@@ -106,4 +106,20 @@ public class VehicleDAO {
         return false;
     }
 
+    public List<Integer> getVehicleIDsByName(String vehicleName) {
+        List<Integer> vehicleIDs = new ArrayList<>();
+        String query = "SELECT vehicleID FROM vehicles WHERE vehicleName = ?"; // Ensure the table name is 'vehicles'
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, vehicleName);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                vehicleIDs.add(rs.getInt("vehicleID"));
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error retrieving vehicle IDs for vehicle name: " + vehicleName, e);
+        }
+        return vehicleIDs;
+    }
 }

@@ -12,7 +12,6 @@ public class Booking {
     private String returnLocation;
     private double bill;
     private String bookingStatus;
-    private String paymentStatus;
 
     // Getters and Setters
 
@@ -107,11 +106,5 @@ public class Booking {
         this.bookingStatus = bookingStatus;
     }
 
-    public String getPaymentStatus() {
-        return paymentStatus;
-    }
-
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
-    }
+    
 }

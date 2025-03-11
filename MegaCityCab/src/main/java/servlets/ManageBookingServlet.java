@@ -1,12 +1,14 @@
 package servlets;
 
 import dao.BookingDAO;
+import dao.VehicleDAO;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet("/ManageBooking")
 public class ManageBookingServlet extends HttpServlet {
@@ -17,58 +19,87 @@ public class ManageBookingServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Display or process bookings (if needed in GET request)
         response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Get bookingID, newStatus, vehicleID, and driverID from request parameters
+        // Get parameters
         String bookingIDStr = request.getParameter("bookingID");
         String newStatus = request.getParameter("newStatus");
         String vehicleIDStr = request.getParameter("vehicleID");
         String driverIDStr = request.getParameter("driverID");
+        String vehicleName = request.getParameter("vehicleName");
 
-        if (bookingIDStr != null && !bookingIDStr.isEmpty() && newStatus != null && !newStatus.isEmpty()) {
-            try {
-                int bookingID = Integer.parseInt(bookingIDStr);
+        BookingDAO bookingDAO = BookingDAO.getInstance();
+        VehicleDAO vehicleDAO = VehicleDAO.getInstance();
 
-                // If only 2 parameters are passed (BookingID and NewStatus)
-                if (vehicleIDStr == null || vehicleIDStr.isEmpty() || driverIDStr == null || driverIDStr.isEmpty()) {
-                    // Update the booking status only
-                    BookingDAO bookingDAO = BookingDAO.getInstance();
-                    boolean isUpdated = bookingDAO.updateBookingStatus(bookingID, newStatus);
+        try {
+            // If only vehicleName is provided, fetch vehicle IDs
+            if ((vehicleName != null && !vehicleName.isEmpty()) &&
+                (bookingIDStr == null || bookingIDStr.isEmpty()) &&
+                (newStatus == null || newStatus.isEmpty()) &&
+                (vehicleIDStr == null || vehicleIDStr.isEmpty()) &&
+                (driverIDStr == null || driverIDStr.isEmpty())) {
 
-                    if (isUpdated) {
-                        // Redirect back to the Manage Bookings page
-                        response.sendRedirect(request.getContextPath() + "/admin/manageBookings.jsp?status=success");
-                    } else {
-                        response.sendRedirect(request.getContextPath() + "/admin/manageBookings.jsp?status=failed");
+                System.out.println("Fetching vehicle IDs for vehicleName: " + vehicleName); // Debugging
+                List<Integer> vehicleIDs = vehicleDAO.getVehicleIDsByName(vehicleName);
+                System.out.println("Vehicle IDs found: " + vehicleIDs); // Debugging
+
+                if (vehicleIDs.isEmpty()) {
+                    response.getWriter().write("No vehicles found with name: " + vehicleName);
+                } else {
+                    // Manually create JSON response
+                    StringBuilder jsonResponse = new StringBuilder("[");
+
+                    for (int i = 0; i < vehicleIDs.size(); i++) {
+                        jsonResponse.append(vehicleIDs.get(i));
+                        if (i < vehicleIDs.size() - 1) {
+                            jsonResponse.append(",");
+                        }
                     }
-                } 
-                // If all 4 parameters are passed (BookingID, NewStatus, VehicleID, DriverID)
-                else {
-                    int vehicleID = Integer.parseInt(vehicleIDStr);
-                    int driverID = Integer.parseInt(driverIDStr);
+                    jsonResponse.append("]");
 
-                    // Update the booking with vehicle and driver
-                    BookingDAO bookingDAO = BookingDAO.getInstance();
-                    boolean isUpdated = bookingDAO.updateBookingWithVehicleAndDriver(bookingID, newStatus, vehicleID, driverID);
-
-                    if (isUpdated) {
-                        // Redirect back to the Manage Bookings page
-                        response.sendRedirect(request.getContextPath() + "/admin/manageBookings.jsp?status=success");
-                    } else {
-                        response.sendRedirect(request.getContextPath() + "/admin/manageBookings.jsp?status=failed");
-
-                    }
-                    
+                    response.setContentType("application/json");
+                    response.setCharacterEncoding("UTF-8");
+                    response.getWriter().write(jsonResponse.toString());
+                    return;
                 }
-
-            } catch (NumberFormatException e) {
-                response.getWriter().write("Invalid input. Please ensure all IDs are valid numbers.");
+                return;
             }
-        } else {
-            response.getWriter().write("Booking ID, status, and required parameters are required.");
+
+            // If bookingID and newStatus are provided, update status
+            if ((bookingIDStr != null && !bookingIDStr.isEmpty()) &&
+                (newStatus != null && !newStatus.isEmpty()) &&
+                (vehicleIDStr == null || vehicleIDStr.isEmpty()) &&
+                (driverIDStr == null || driverIDStr.isEmpty())) {
+
+                int bookingID = Integer.parseInt(bookingIDStr);
+                boolean isUpdated = bookingDAO.updateBookingStatus(bookingID, newStatus);
+
+                response.sendRedirect(request.getContextPath() + "/admin/manageBookings.jsp?status=" + (isUpdated ? "success" : "failed"));
+                return;
+            }
+
+            // If all four parameters are provided, update with vehicle and driver
+            if ((bookingIDStr != null && !bookingIDStr.isEmpty()) &&
+                (newStatus != null && !newStatus.isEmpty()) &&
+                (vehicleIDStr != null && !vehicleIDStr.isEmpty()) &&
+                (driverIDStr != null && !driverIDStr.isEmpty())) {
+
+                int bookingID = Integer.parseInt(bookingIDStr);
+                int vehicleID = Integer.parseInt(vehicleIDStr);
+                int driverID = Integer.parseInt(driverIDStr);
+
+                boolean isUpdated = bookingDAO.updateBookingWithVehicleAndDriver(bookingID, newStatus, vehicleID, driverID);
+
+                response.sendRedirect(request.getContextPath() + "/admin/manageBookings.jsp?status=" + (isUpdated ? "success" : "failed"));
+                return;
+            }
+
+            // If parameters are missing or invalid
+            response.getWriter().write("Invalid request. Please provide valid parameters.");
+        } catch (NumberFormatException e) {
+            response.getWriter().write("Invalid input. Ensure IDs are valid numbers.");
         }
     }
 }

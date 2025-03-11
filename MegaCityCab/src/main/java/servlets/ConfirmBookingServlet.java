@@ -98,7 +98,6 @@ public class ConfirmBookingServlet extends HttpServlet {
             booking.setReturnLocation(returnLocation);
             booking.setBill(Double.parseDouble(bill));
             booking.setBookingStatus(bookingStatus);
-            booking.setPaymentStatus(paymentStatus);
 
             // Debugging: Print booking object to ensure correct values
             System.out.println("Booking Object Created: " + booking);
@@ -127,7 +126,7 @@ public class ConfirmBookingServlet extends HttpServlet {
 
         // Forward the request back to a confirmation page
         System.out.println("Forwarding to confirmation page.");
-        request.getRequestDispatcher("/customer/myBookings.jsp").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/MyBookings");
     }
 
     // Helper method to check if a string is numeric

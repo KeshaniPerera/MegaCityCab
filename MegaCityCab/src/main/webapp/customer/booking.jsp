@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
-
     <style>
         /* General styling */
         body {
@@ -15,7 +14,6 @@
             padding: 0;
             color: #fff; /* White text color */
         }
-
         /* Container to center the content */
         .container {
             width: 70%;
@@ -25,20 +23,17 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
         }
-
         h1 {
             color: #333;
             text-align: center;
             margin-bottom: 20px;
         }
-
         label {
             font-size: 16px;
             margin-bottom: 5px;
             display: inline-block;
             color: #333;
         }
-
         select, input[type="date"], input[type="time"] {
             width: 100%;
             padding: 10px;
@@ -47,7 +42,6 @@
             border-radius: 5px;
             background-color: #fff;
         }
-
         button {
             width: 100%;
             padding: 15px;
@@ -58,46 +52,37 @@
             font-size: 18px;
             cursor: pointer;
         }
-
         button:hover {
             background-color: #333; /* Darker shade of black on hover */
         }
-
         .form-group {
             margin-bottom: 20px;
         }
-
         .dropdown-container {
             display: flex;
             justify-content: space-between;
             gap: 10px;
         }
-
         .dropdown-container select {
             width: 48%;  /* Adjust width to fit side by side */
         }
-
         .date-time-container {
             display: flex;
             justify-content: space-between;
             gap: 10px;
         }
-
         .date-time-container input {
             width: 48%;  /* Adjust width to fit side by side */
         }
-
         .footer {
             text-align: center;
             margin-top: 30px;
             color: #555;
         }
-
         /* Styling for the fields when there's a value */
         .field-label {
             font-weight: bold;
         }
-
         .field-container {
             margin-bottom: 15px;
         }
@@ -106,17 +91,16 @@
 <body>
     <%@ include file="navBar.jsp" %>
 
-
     <div class="container">
         <h1>Booking Page</h1>
 
-        <form action="${pageContext.request.contextPath}/booking" method="post">
+          <form action="${pageContext.request.contextPath}/booking" method="post">
             <div class="form-group">
                 <label for="vehicle">Select Vehicle:</label>
                 <select id="vehicleType" name="vehicleType">
-                    <option value="car">Car</option>
-                    <option value="van">Van</option>
-                    <option value="bike">Bike</option>
+                    <c:forEach var="vehicleName" items="${uniqueVehicleNames}">
+                        <option value="${vehicleName}">${vehicleName}</option>
+                    </c:forEach>
                 </select>
             </div>
 
@@ -159,11 +143,6 @@
 
             <button type="submit">Calculate Fare</button>
         </form>
-
-       
     </div>
-
-    
-
 </body>
 </html>

@@ -49,17 +49,15 @@
                         <thead class="table-dark">
                             <tr>
                                 <th>Booking ID</th>
-                                <th>Customer Email</th>
                                 <th>Vehicle Type</th>
                                 <th>Vehicle ID</th>
                                 <th>Driver ID</th>
                                 <th>Rental Date</th>
                                 <th>Rental Time</th>
                                 <th>Pickup Location</th>
-                                <th>Return Location</th>
+                                <th>Drop Location</th>
                                 <th>Bill</th>
                                 <th>Booking Status</th>
-                                <th>Payment Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,7 +71,7 @@
                                     <td>${booking.rentalTime}</td>
                                     <td>${booking.pickupLocation}</td>
                                     <td>${booking.returnLocation}</td>
-                                    <td>$${booking.bill}</td>
+                                    <td>Rs. ${booking.bill}</td>
                                     <td>
                                         <c:choose>
                                             <c:when test="${booking.bookingStatus == 'Confirmed'}">
@@ -84,16 +82,6 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <span class="status-cancelled">${booking.bookingStatus}</span>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </td>
-                                    <td>
-                                        <c:choose>
-                                            <c:when test="${booking.paymentStatus == 'Paid'}">
-                                                <span class="status-confirmed">${booking.paymentStatus}</span>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <span class="status-pending">${booking.paymentStatus}</span>
                                             </c:otherwise>
                                         </c:choose>
                                     </td>
