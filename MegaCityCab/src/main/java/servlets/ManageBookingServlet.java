@@ -2,6 +2,10 @@ package servlets;
 
 import dao.BookingDAO;
 import dao.VehicleDAO;
+import dao.DriverDAO; // Add this import
+import model.Vehicle;
+import model.Driver; // Add this import
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +23,20 @@ public class ManageBookingServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.getWriter().append("Served at: ").append(request.getContextPath());
+        // Fetch vehicles from the database
+        VehicleDAO vehicleDAO = VehicleDAO.getInstance();
+        List<Vehicle> vehicles = vehicleDAO.getAllVehicles();
+
+        // Fetch drivers from the database
+        DriverDAO driverDAO = DriverDAO.getInstance(); // Add this
+        List<Driver> drivers = driverDAO.getAllDrivers(); // Add this
+
+        // Set vehicles and drivers as request attributes
+        request.setAttribute("vehicles", vehicles);
+        request.setAttribute("drivers", drivers); // Add this
+
+        // Forward to the JSP page
+        request.getRequestDispatcher("/manageBookings.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

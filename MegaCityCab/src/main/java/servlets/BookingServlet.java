@@ -46,8 +46,8 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
         // Get the pickup, drop locations, vehicle, date, and time from the form submission
         String pickup = request.getParameter("pickup");
         String drop = request.getParameter("drop");
-        String vehicleType = request.getParameter("vehicleType");  // Corrected vehicle parameter
-        String date = request.getParameter("date");                // Corrected date parameter
+        String vehicleType = request.getParameter("vehicleType");  
+        String date = request.getParameter("date");               
         String time = request.getParameter("time"); 
 
         // Calculate the bill using the utility class
