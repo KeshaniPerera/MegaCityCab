@@ -27,21 +27,19 @@ public class ManageBookingServlet extends HttpServlet {
         VehicleDAO vehicleDAO = VehicleDAO.getInstance();
         List<Vehicle> vehicles = vehicleDAO.getAllVehicles();
 
-        // Fetch drivers from the database
-        DriverDAO driverDAO = DriverDAO.getInstance(); // Add this
-        List<Driver> drivers = driverDAO.getAllDrivers(); // Add this
+        DriverDAO driverDAO = DriverDAO.getInstance(); 
+        List<Driver> drivers = driverDAO.getAllDrivers();
 
         // Set vehicles and drivers as request attributes
         request.setAttribute("vehicles", vehicles);
-        request.setAttribute("drivers", drivers); // Add this
+        request.setAttribute("drivers", drivers); 
 
-        // Forward to the JSP page
         request.getRequestDispatcher("/manageBookings.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Get parameters
-        String bookingIDStr = request.getParameter("bookingID");
+
+    	String bookingIDStr = request.getParameter("bookingID");
         String newStatus = request.getParameter("newStatus");
         String vehicleIDStr = request.getParameter("vehicleID");
         String driverIDStr = request.getParameter("driverID");
@@ -51,7 +49,6 @@ public class ManageBookingServlet extends HttpServlet {
         VehicleDAO vehicleDAO = VehicleDAO.getInstance();
 
         try {
-            // If only vehicleName is provided, fetch vehicle IDs
             if ((vehicleName != null && !vehicleName.isEmpty()) &&
                 (bookingIDStr == null || bookingIDStr.isEmpty()) &&
                 (newStatus == null || newStatus.isEmpty()) &&
@@ -84,7 +81,6 @@ public class ManageBookingServlet extends HttpServlet {
                 return;
             }
 
-            // If bookingID and newStatus are provided, update status
             if ((bookingIDStr != null && !bookingIDStr.isEmpty()) &&
                 (newStatus != null && !newStatus.isEmpty()) &&
                 (vehicleIDStr == null || vehicleIDStr.isEmpty()) &&
@@ -97,7 +93,6 @@ public class ManageBookingServlet extends HttpServlet {
                 return;
             }
 
-            // If all four parameters are provided, update with vehicle and driver
             if ((bookingIDStr != null && !bookingIDStr.isEmpty()) &&
                 (newStatus != null && !newStatus.isEmpty()) &&
                 (vehicleIDStr != null && !vehicleIDStr.isEmpty()) &&

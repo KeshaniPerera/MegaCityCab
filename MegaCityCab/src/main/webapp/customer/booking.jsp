@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking</title>
     <style>
-        /* General styling */
         body {
             font-family: Arial, sans-serif;
-            background-color: #000;  /* Black background */
+            background-color: #000;  
             margin: 0;
             padding: 0;
-            color: #fff; /* White text color */
+            color: #fff; 
         }
-        /* Container to center the content */
+     
+     
         .container {
             width: 70%;
             margin: 0 auto;

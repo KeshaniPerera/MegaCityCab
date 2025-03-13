@@ -25,8 +25,8 @@ public class PasswordUtil {
 
     //  Method to Generate Hashed Password for Admin
     public static void main(String[] args) {
-        String adminPassword = "admin123";  // Set the current admin password
+        String adminPassword = "admin@megacitycabs";  // Set the current admin password
         String hashedPassword = hashPassword(adminPassword); // Hash it
-        System.out.println("🔒 Hashed Admin Password: " + hashedPassword);
+        System.out.println(" Hashed Admin Password: " + hashedPassword);
     }
 }

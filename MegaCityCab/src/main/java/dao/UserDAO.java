@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserDAO {
-    private static UserDAO instance; // Singleton Instance
+    private static UserDAO instance; 
     private final Connection connection;
 
     private UserDAO() {

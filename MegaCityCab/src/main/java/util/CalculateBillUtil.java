@@ -5,7 +5,7 @@ import model.Locations;
 public class CalculateBillUtil {
 
     // Define a constant rate per kilometer (you can change this rate)
-    private static final double RATE_PER_KM = 10.0;
+    private static final double RATE_PER_KM = 250.0;
 
     // Method to calculate the bill based on pickup and drop locations
     public static double calculateBill(String pickup, String drop) {

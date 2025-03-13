@@ -1,7 +1,7 @@
 package model;
 
 public class User {
-    private int UserID; // Field names with uppercase letters
+    private int UserID; 
     private String FirstName;
     private String LastName;
     private String Email;
@@ -10,9 +10,9 @@ public class User {
     private String Address;
     private String Password;
 
-    // Constructor with UserID (useful for fetching from DB)
+  
     public User(int userID, String firstName, String lastName, String email, String NIC, String telephone, String address, String password) {
-        this.UserID = userID; // Corrected to match field names
+        this.UserID = userID; 
         this.FirstName = firstName;
         this.LastName = lastName;
         this.Email = email;
@@ -22,9 +22,8 @@ public class User {
         this.Password = password;
     }
 
-    // Constructor without UserID (useful for creating new users)
     public User(String firstName, String lastName, String email, String NIC, String telephone, String address, String password) {
-        this.FirstName = firstName; // Corrected to match field names
+        this.FirstName = firstName; 
         this.LastName = lastName;
         this.Email = email;
         this.NIC = NIC;

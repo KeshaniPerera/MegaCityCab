@@ -31,7 +31,7 @@ public class SignInServlet extends HttpServlet {
         }
 
         // Check for admin credentials
-        if ("admin@megacitycabs".equals(email) && "123".equals(password)) {
+        if ("admin@megacitycabs".equals(email) && "admin@megacitycabs".equals(password)) {
             System.out.println("[SignInServlet] Admin login successful for: " + email);
 
             HttpSession session = request.getSession();
