@@ -16,7 +16,7 @@ MegaCityCab is a **dynamic web project** developed using:
 - **Development Environment:** Eclipse IDE
 - **Server:** Apache Tomcat
 
-The system follows the **Model-View-Controller (MVC)** architecture, ensuring separation of concerns and modular development.
+The system follows the **3-tier** architecture, ensuring separation of concerns and modular development.
 
 ---
 
@@ -26,16 +26,16 @@ The system follows the **Model-View-Controller (MVC)** architecture, ensuring se
 
 ✅ **User Registration & Login** – Secure authentication for customers and drivers.\
 ✅ **Cab Booking** – Users can book cabs online based on availability.\
-✅ **Real-time Fare Calculation** – Displays estimated fare before booking.\
-✅ **Booking History** – Users can view their previous rides.\
-✅ **Cancellation & Modification** – Users can cancel or modify bookings.
+✅ **Booking History** – Users can view their bookings with status.\
+
 
 ### 🏢 Admin Features:
 
-✅ **Driver Management** – Add, remove, and update driver details.\
 ✅ **Booking Management** – View, approve, or reject ride bookings.\
-✅ **User Management** – Manage registered users.\
-✅ **Earnings Report** – View reports on completed rides and earnings.
+✅ **Cancellation & Modification** – admin can cancel or modify bookings.
+✅ **Driver Management** – Add, remove driver details.\
+✅ **Vehicle Management** – Add, remove vehicle details.\
+
 
 ---
 
